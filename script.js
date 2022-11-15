@@ -24,17 +24,45 @@ async function getRequiredData(location) {
 		wind_degree: json.wind.deg,
 	};
 
-	console.log(json, data);
+	return data;
 }
 
-getRequiredData('Maglie');
+async function displayData(location) {
+	const data = await getRequiredData(location);
+
+	document.querySelector(
+		'.city-name'
+	).textContent = `${data.city_name}, ${data.city_country}`;
+
+	document.querySelector('.temp').textContent = `${data.temp}`;
+
+	document.querySelector(
+		'.temp_percepita'
+	).textContent = `${data.temp_percepita}`;
+
+	document.querySelector('.temp_max').textContent = `${data.temp_max}`;
+
+	document.querySelector('.temp_min').textContent = `${data.temp_min}`;
+
+	document.querySelector('.humidity').textContent = `${data.humidity}`;
+
+	document.querySelector('.pressure').textContent = `${data.pressure}`;
+
+	document.querySelector('.wind_speed').textContent = `${data.wind_speed}`;
+
+	document.querySelector('.wind_degree').textContent = `${data.wind_degree}`;
+}
+
+/* UI events */
 
 const searchInput = document.querySelector('input');
 
 document.querySelector('form').addEventListener('submit', (event) => {
-	const cityName = searchInput.value;
+	let cityName = searchInput.value;
 
-	getRequiredData(cityName);
+	displayData(cityName);
 
 	event.preventDefault();
 });
+
+displayData('London');
